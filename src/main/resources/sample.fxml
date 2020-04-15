@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grad.controller.Controller">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <bottom>
+        <Label fx:id="lblInformation" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets left="5.0" right="5.0" />
+            </padding>
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
+        </Label>
+    </bottom>
+    <center>
+        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <tabs>
+                <Tab text="Register">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <Label layoutX="34.0" layoutY="31.0" text="Username" />
+                                <Label layoutX="36.0" layoutY="74.0" text="Password" />
+                                <Label layoutX="39.0" layoutY="116.0" text="Confirm password" />
+                                <TextField fx:id="txtFieldUsernameRegister" layoutX="172.0" layoutY="26.0" />
+                                <PasswordField fx:id="pwdFieldRegister" layoutX="172.0" layoutY="69.0" />
+                                <PasswordField fx:id="pwdFieldConfirmRegister" layoutX="172.0" layoutY="112.0" />
+                                <Button fx:id="btnRegister" layoutX="285.0" layoutY="154.0" mnemonicParsing="false" onAction="#registerUser" text="Register" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Login">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <Label layoutX="24.0" layoutY="21.0" text="Username" />
+                                <Label layoutX="26.0" layoutY="57.0" text="Password" />
+                                <TextField fx:id="txtFieldUsernameLogin" layoutX="151.0" layoutY="16.0" />
+                                <PasswordField fx:id="pwdFieldLogin" layoutX="151.0" layoutY="52.0" />
+                                <Button fx:id="btnLogin" layoutX="281.0" layoutY="92.0" mnemonicParsing="false" onAction="#loginUser" text="Login" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>
