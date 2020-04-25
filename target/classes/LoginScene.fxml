@@ -58,12 +58,6 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="tabTask" text="Task">
-                <content>
-                    <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="659.0">
-                    </AnchorPane>
-                </content>
-            </Tab>
         </tabs>
       </TabPane>
    </center>

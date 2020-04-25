@@ -54,26 +54,20 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
                                 <Label layoutX="34.0" layoutY="31.0" text="Username" />
-                                <Label layoutX="36.0" layoutY="74.0" text="Password" />
+                                <Label fx:id="lblPasswordRegister" layoutX="36.0" layoutY="74.0" text="Password" />
                                 <Label layoutX="39.0" layoutY="116.0" text="Confirm password" />
                                 <TextField fx:id="txtFieldUsernameRegister" layoutX="172.0" layoutY="26.0" />
                                 <PasswordField fx:id="pwdFieldRegister" layoutX="172.0" layoutY="69.0" />
                                 <PasswordField fx:id="pwdFieldConfirmRegister" layoutX="172.0" layoutY="112.0" />
                                 <Button fx:id="btnRegister" layoutX="285.0" layoutY="154.0" mnemonicParsing="false" onAction="#registerUser" text="Register" />
-                        <Pane layoutX="450.0" layoutY="-39.0" prefHeight="552.0" prefWidth="354.0" style="-fx-background-color: #90EE90;" />
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
-                <Tab text="Login">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <Label layoutX="24.0" layoutY="21.0" text="Username" />
-                                <Label layoutX="26.0" layoutY="57.0" text="Password" />
-                                <TextField fx:id="txtFieldUsernameLogin" layoutX="151.0" layoutY="16.0" />
-                                <PasswordField fx:id="pwdFieldLogin" layoutX="151.0" layoutY="52.0" />
-                                <Button fx:id="btnLogin" layoutX="281.0" layoutY="92.0" mnemonicParsing="false" onAction="#loginUser" text="Login" />
+                        <Pane layoutX="450.0" layoutY="-39.0" prefHeight="552.0" prefWidth="354.0" style="-fx-background-color: #90EE90;">
+                           <children>
+                              <Button fx:id="btnGoLogin" layoutX="145.0" layoutY="486.0" mnemonicParsing="false" onAction="#goToLogin" text="Go to Login" />
+                           </children></Pane>
+                        <TextField fx:id="txtFieldPasswordRegister" layoutX="172.0" layoutY="69.0" visible="false" />
+                        <TextField fx:id="txtFieldConfirmPasswordRegister" layoutX="172.0" layoutY="112.0" visible="false" />
+                        <Button fx:id="showPassword" layoutX="374.0" layoutY="69.0" mnemonicParsing="false" onAction="#unveilPassword" text="Show" />
+                        <Label fx:id="lblErrorMessage" layoutX="172.0" layoutY="95.0" prefHeight="21.0" prefWidth="188.0" />
                             </children>
                         </AnchorPane>
                     </content>

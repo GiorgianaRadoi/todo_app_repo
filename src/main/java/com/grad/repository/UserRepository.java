@@ -8,13 +8,17 @@ import java.util.List;
 public class UserRepository implements CrudRepository<User, Integer> {
     private EntityManager entityManager;
 
+
     public UserRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     public List<User> findAll() {
-        //TODO: add implementation
-        return null;
+       List <User> users = entityManager.createQuery( "SELECT u  FROM User u " )
+                .getResultList();
+        return  users;
+
+
     }
 
     public void save(User user) {
@@ -43,10 +47,16 @@ public class UserRepository implements CrudRepository<User, Integer> {
         return null;
     }
 
-    public User findByUsername(String username) {
-        User user =  (User) entityManager.createQuery("SELECT * FROM User u WHERE u.username = :username")
-                .setParameter("username", username)
-                .getResultList().get(0);
-        return user;
+    public User findByUserName(String username) {
+        try {
+            User user = (User) entityManager
+                    .createQuery( "SELECT u  FROM User u WHERE u.username = :username" )
+                    .setParameter( "username", username )
+                    .getResultList()
+                    .get( 0 );
+            return user;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

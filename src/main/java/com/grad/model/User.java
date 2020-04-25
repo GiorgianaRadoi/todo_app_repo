@@ -1,43 +1,47 @@
 package com.grad.model;
 
 
-
 import javax.persistence.*;
+import java.util.Set;
 
-    @Entity
-    @Table(name = "user") // redundant, because table will be named implicitly user
-    public class User {
+@Entity
+@Table(name = "user")// redundant, because table will be named implicitly user
+public class User {
 
-        @Id //primary key
-        @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO-INCREMENT
-        private int id;
-        private String username;
-        private String password;
+    @Id //primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO-INCREMENT
+    private int id;
+    private String username;
+    private String password;
 
-        public User() {
-        }
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Task> tasks;
 
-        public int getId() {
-            return id;
-        }
 
-        public void setId(int id) {
-            this.id = id;
-        }
+    public User() {
+    }
 
-        public String getUsername() {
-            return username;
-        }
+    public int getId() {
+        return id;
+    }
 
-        public void setUsername(String username) {
-            this.username = username;
-        }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-        public String getPassword() {
-            return password;
-        }
+    public String getUsername() {
+        return username;
+    }
 
-        public void setPassword(String password) {
-            this.password = password;
-        }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
