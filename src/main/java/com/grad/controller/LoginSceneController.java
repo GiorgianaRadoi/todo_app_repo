@@ -27,6 +27,9 @@ public class LoginSceneController {
     public MenuItem showLoginTab;
     public Tab tabLogin;
     public TabPane tabPane;
+    public TextField txtFieldTODO;
+    private UserRepository userRepository;
+    private User loggedInUser;
 
 
     public void GoToRegister(ActionEvent event) throws IOException {
@@ -46,17 +49,19 @@ public class LoginSceneController {
     }
 
     public void LoginUser(ActionEvent event) {
+        loggedInUser = userRepository.findByUserName( txtFieldUsernameLogin.getText() );
+        lblLoginInfo.setVisible( true );
+        if (loggedInUser != null) {
+            lblLoginInfo.setText( "Congratulations!" );
+            lblLoginInfo.setTextFill( Color.GREEN );
 
-//        if(txtFieldUsernameLogin.getText().equals( User.getUsername() ) && txtFieldPasswordLogin.getText().equals( User.getPassword() )){
-////            lblLoginInfo.setText("Congratulations!");
-////            lblLoginInfo.setTextFill( Color.GREEN);
-////        }
-////        else{
-////            lblLoginInfo.setText("Incorrect user or pw.");
-////            lblLoginInfo.setTextFill(Color.RED);
-////        }
-////        txtFieldUsernameLogin.setText("");
-////        txtFieldPasswordLogin.setText("");
+
+        } else {
+            lblLoginInfo.setText( "Incorrect user or pw." );
+            lblLoginInfo.setTextFill( Color.RED );
+        }
+        txtFieldUsernameLogin.clear();
+        txtFieldPasswordLogin.clear();
     }
 
 

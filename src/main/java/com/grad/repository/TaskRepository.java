@@ -14,9 +14,7 @@ public class TaskRepository implements CrudRepository<Task, Integer> {
 
 
     public List<Task> findAll() {
-        List <Task> tasks= entityManager.createQuery( "SELECT t  FROM Task t " )
-                .getResultList();
-        return  tasks;
+       return entityManager.createQuery( "SELECT t  FROM Task t " ).getResultList();
 
     }
 

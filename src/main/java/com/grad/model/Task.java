@@ -1,47 +1,30 @@
 package com.grad.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
+@Data //for getter and setter
+@NoArgsConstructor // for no arg constructor
 @Entity
-@Table
+@Table(name = "task")
 public class Task {
     @Id
-    @GeneratedValue
-    private int task_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO , 1, 2, -> POSGRESQL
+    @Column(name = "task_id")
+    private int id;
+
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Subtask> subtask;
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 
-    public Task() {
-    }
+    @ManyToOne
+    private Project project;
 
-    public int getTask_id() {
-        return task_id;
-    }
-
-    public void setTask_id(int task_id) {
-        this.task_id = task_id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Subtask getSubtask() {
-        return (Subtask) subtask;
-    }
-
-    public void setSubtask(Subtask subtask) {
-        this.subtask = (Set<Subtask>) subtask;
-    }
+    @OneToMany(mappedBy = "task" , cascade = CascadeType.ALL)
+    private List<Subtask> subtasks;
 }

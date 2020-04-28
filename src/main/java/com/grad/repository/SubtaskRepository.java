@@ -13,7 +13,7 @@ public class SubtaskRepository implements CrudRepository<Subtask, Integer> {
     }
 
     public List<Subtask> findAll() {
-        return null;
+        return entityManager.createQuery( "SELECT s  FROM Subtask s " ).getResultList();
     }
 
     public void save(Subtask subtask) {

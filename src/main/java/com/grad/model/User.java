@@ -1,47 +1,35 @@
 package com.grad.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
+@Data //for getter and setter
+@NoArgsConstructor // for no arg constructor
 @Entity
 @Table(name = "user")// redundant, because table will be named implicitly user
 public class User {
 
-    @Id //primary key
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO-INCREMENT
-    private int id;
+    @Id
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto_Increment
+    private int user_id;
     private String username;
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Task> tasks;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Task> tasks;
 
+    @ManyToMany
+    @JoinTable(name = "working_project",
+            joinColumns = @JoinColumn(name = "user_id"), //current entity -> user
 
-    public User() {
-    }
+            inverseJoinColumns = @JoinColumn(name = "project_id")) // "foreign" entity -> project
+    private List<Project> projects;
 
-    public int getId() {
-        return id;
-    }
+    @OneToOne(mappedBy = "user")
+    private PendingUser pendingUser;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

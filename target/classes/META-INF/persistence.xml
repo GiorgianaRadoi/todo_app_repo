@@ -8,9 +8,14 @@
             <!--            driver-->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <!--database connection information-->
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://remotemysql.com:3306/eAFOghwmSe"/>
-            <property name="javax.persistence.jdbc.user" value="eAFOghwmSe"/>
-            <property name="javax.persistence.jdbc.password" value="QbF1oKVnTw"/>
+<!--            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://remotemysql.com:3306/eAFOghwmSe"/>-->
+<!--            <property name="javax.persistence.jdbc.user" value="eAFOghwmSe"/>-->
+<!--            <property name="javax.persistence.jdbc.password" value="QbF1oKVnTw"/>-->
+
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/todoapp"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="Root"/>
+
 
             <!--            connection to database "language" or dialect -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/>
