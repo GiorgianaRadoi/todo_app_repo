@@ -57,6 +57,11 @@ public class LoginSceneController {
     private TaskRepository taskRepository;
     private boolean isConnectionSuccessful;
 
+    /**
+     * CTRL + SHIFT + A and write down whatever u want and intellij is bringing that stuff to you
+     * write commit and commit stuff
+     */
+
     public void initialize() {
         try {
             persistenceConnection();
