@@ -50,6 +50,7 @@ public class Controller {
     private User loggedInUser;
 
 
+    //
     public void initialize() {
         try {
             persistenceConnection();
