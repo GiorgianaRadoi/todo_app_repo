@@ -48,7 +48,7 @@ public class Controller {
     private boolean isConnectionSuccessful = false;
     private Task task;
     private User loggedInUser;
-
+//
 
     //
     public void initialize() {
