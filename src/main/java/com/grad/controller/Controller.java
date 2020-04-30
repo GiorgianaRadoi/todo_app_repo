@@ -50,6 +50,14 @@ public class Controller {
     private User loggedInUser;
 //
 
+    /**
+     * Good to know:
+     * 1.git add .
+     * 1. git commit
+     * 2. git push
+     *
+     *
+     */
     //
     public void initialize() {
         try {
