@@ -1,6 +1,8 @@
 package com.grad.controller;
 
+import com.grad.model.Task;
 import com.grad.model.User;
+import com.grad.repository.TaskRepository;
 import com.grad.repository.UserRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -34,6 +35,7 @@ public class Controller {
     public Label lblUsernameRegister;
     public Label lblConfirmPasswordRegister;
     public Label lblInformation;
+    public Label lblErrorMessage;
 
     @FXML
     private TextField txtFieldUsernameRegister;
@@ -42,8 +44,10 @@ public class Controller {
     @FXML
     private PasswordField pwdFieldConfirmRegister;
     private UserRepository userRepository;
+    public TaskRepository taskRepository;
     private boolean isConnectionSuccessful = false;
-
+    private Task task;
+    private User loggedInUser;
 
 
     public void initialize() {
@@ -61,116 +65,66 @@ public class Controller {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         userRepository = new UserRepository( entityManager );
+        taskRepository = new TaskRepository(entityManager);
     }
 
-//    @FXML
-//    private void registerUser(ActionEvent actionEvent) {
-//        User  user = userRepository.findByUserName( txtFieldUsernameRegister.getText() );
-//      // String pwdPattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{5,}";
-//
-//        if(pwdFieldRegister.getText().equals( pwdFieldConfirmRegister.getText() )&& user == null   ) {//&&pwdFieldRegister.getText().matches(  pwdPattern)
-//            user = new User();
-//            user.setUsername( txtFieldUsernameRegister.getText() );
-//            user.setPassword( pwdFieldRegister.getText() );
-//            userRepository.save( user );
-//            pwdFieldRegister.setText( "" );
-//            pwdFieldConfirmRegister.setText( "" );
-//            txtFieldUsernameRegister.setText( "" );
-//            lblInformation.setText( "user registered!" );
-//
-//
-//        }else{
-//            lblInformation.setText("username: "+txtFieldUsernameRegister.getText() + " is already registered.Please pick other username." );
-//            lblPasswordRegister.setTextFill( Color.RED );
-//            lblErrorMessage.setText( "Invalid password format!" );
-//            lblErrorMessage.setTextFill( Color.RED );
-//        }
-//    }
+    @FXML
+    public void registerUser(ActionEvent actionEvent) {
+        User user = userRepository.findByUserName( txtFieldUsernameRegister.getText() );
+        String pwdPattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{5,}";
 
-    public void registerUser(ActionEvent mouseEvent) {
-
-        lblPasswordWarning();
-        lblConfirmPasswordWarning();
-        isAlreadyIn();
+        if (txtFieldUsernameRegister.getText().equals( "" )) {
+            lblUsernameRegister.setTextFill( Color.RED );
+            lblInformation.setText( "Please provide Username" );
+        } else if (pwdFieldRegister.getText().equals( "" )) {
+            lblPasswordRegister.setTextFill( Color.RED );
+            lblInformation.setText( "Please provide Password" );
+//            }else if(!pwdFieldRegister.getText().matches( pwdPattern )){
+//                lblPasswordRegister.setTextFill( Color.RED );
+//                lblInformation.setText( "Password must contain nr, special ch, capital letter" );
+        } else if (pwdFieldConfirmRegister.getText().equals( "" )) {
+            lblConfirmPasswordRegister.setTextFill( Color.RED );
+            lblInformation.setText( "Please Confirm password" );
+        } else if (pwdFieldRegister.getText().equals( pwdFieldConfirmRegister.getText() ) && user == null) {
+            user = new User();
+            user.setUsername( txtFieldUsernameRegister.getText() );
+            user.setPassword( pwdFieldRegister.getText() );
+            userRepository.save( user );
+            lblInformation.setText( "User registered" );
+        } else {
+            lblInformation.setText( "Is already in" );
+        }
         txtFieldUsernameRegister.clear();
         pwdFieldRegister.clear();
         pwdFieldConfirmRegister.clear();
     }
 
-
-    @FXML
-    public void lblUsernameFieldRegisterWarning(MouseEvent mouseEvent) {
-        if (txtFieldUsernameRegister.getText().length() < 1) {
-            lblUsernameRegister.setTextFill(Color.RED);
-            lblInformation.setTextFill(Color.RED);
-            lblInformation.setText("Please provide Username");
-        } else {
-            lblUsernameRegister.setTextFill(Color.BLACK);
-
-        }
-    }
-
-    private void lblPasswordWarning() {
-        if (txtFieldPasswordRegister.getText().length() < 1) {
-            lblPasswordRegister.setTextFill(Color.RED);
-
-            lblInformation.setTextFill(Color.RED);
-            lblInformation.setText("Please fill Password field");
-        } else {
-            lblPasswordRegister.setTextFill(Color.BLACK);
-
-        }
-    }
-
-    private void lblConfirmPasswordWarning() {
-        if (txtFieldConfirmPasswordRegister.getText().length() < 1) {
-            lblConfirmPasswordRegister.setTextFill(Color.RED);
-
-            lblInformation.setTextFill(Color.RED);
-            lblInformation.setText("Please fill Confirm password field");
-        } else {
-            lblConfirmPasswordRegister.setTextFill(Color.BLACK);
-
-        }
-    }
-
-    private void isAlreadyIn() {
-        User user = userRepository.findByUserName(txtFieldUsernameRegister.getText());
-        if (pwdFieldRegister.getText().equals(pwdFieldConfirmRegister.getText()) && user == null) {
-            user = new User();
-            user.setUsername(txtFieldUsernameRegister.getText());
-            user.setPassword(pwdFieldRegister.getText());
-            userRepository.save(user);
-        } else {
-            lblInformation.setText("Is already in");
-        }
-    }
-
-
     public void goToLogin(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("LoginScene.fxml");
+        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream( "LoginScene.fxml" );
         Parent sceneLogin = fxmlLoader.load( resourceAsStream );
         Scene loginScene = new Scene( sceneLogin );
 
-        Stage window = (Stage)((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("Login");
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle( "Login" );
         window.setScene( loginScene );
         window.show();
 
     }
+
     public void unveilPassword(ActionEvent actionEvent) {
-        if(!txtFieldPasswordRegister.isVisible()){
+        if (!txtFieldPasswordRegister.isVisible()) {
             showPassword.setText( "Hide" );
             txtFieldPasswordRegister.setText( pwdFieldRegister.getText() );
             txtFieldPasswordRegister.setEditable( false );
             txtFieldPasswordRegister.setVisible( true );
             pwdFieldRegister.setVisible( false );
-        }else{
+        } else {
             showPassword.setText( "Show" );
             txtFieldPasswordRegister.setVisible( false );
             pwdFieldRegister.setVisible( true );
         }
 
     }
+
 }

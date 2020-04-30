@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TaskRepository implements CrudRepository<Task, Integer> {
     private EntityManager entityManager;
-    private TaskRepository(EntityManager entityManager) {
+    public TaskRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

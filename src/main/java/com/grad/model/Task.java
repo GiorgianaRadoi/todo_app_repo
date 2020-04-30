@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data //for getter and setter
@@ -27,4 +28,10 @@ public class Task {
 
     @OneToMany(mappedBy = "task" , cascade = CascadeType.ALL)
     private List<Subtask> subtasks;
+
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @Column(name = "in_progress")
+    private Boolean inProgress;
 }
