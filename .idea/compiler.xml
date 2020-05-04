@@ -20,8 +20,8 @@
         <module name="TODOApp" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="TODOApp" target="1.5" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="TODOApp" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -18,6 +18,8 @@ public class User {
     private int user_id;
     private String username;
     private String password;
+    @Column(name="ia_admin")
+    private boolean isAdmin;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Task> tasks;

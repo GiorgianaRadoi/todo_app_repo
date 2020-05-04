@@ -1,7 +1,7 @@
 package com.grad.controller;
 
-import com.grad.model.Task;
 import com.grad.model.User;
+import com.grad.repository.ProjectRepository;
 import com.grad.repository.TaskRepository;
 import com.grad.repository.UserRepository;
 import javafx.event.ActionEvent;
@@ -23,7 +23,7 @@ import javax.persistence.Persistence;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class Controller {
+public class RegisterController {
 
 
     public Button btnGoLogin;
@@ -45,20 +45,11 @@ public class Controller {
     private PasswordField pwdFieldConfirmRegister;
     private UserRepository userRepository;
     public TaskRepository taskRepository;
+    public ProjectRepository projectRepository;
     private boolean isConnectionSuccessful = false;
-    private Task task;
-    private User loggedInUser;
-//
 
-    /**
-     * Good to know:
-     * 1.git add .
-     * 1. git commit
-     * 2. git push
-     *
-     *
-     */
-    //
+
+
     public void initialize() {
         try {
             persistenceConnection();
@@ -75,6 +66,7 @@ public class Controller {
 
         userRepository = new UserRepository( entityManager );
         taskRepository = new TaskRepository(entityManager);
+        projectRepository = new ProjectRepository(entityManager);
     }
 
     @FXML
@@ -110,7 +102,7 @@ public class Controller {
 
     public void goToLogin(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream( "LoginScene.fxml" );
+        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream( "login.fxml" );
         Parent sceneLogin = fxmlLoader.load( resourceAsStream );
         Scene loginScene = new Scene( sceneLogin );
 
