@@ -1,22 +1,14 @@
 package com.grad.controller;
 
-import com.grad.model.Task;
-import com.grad.model.User;
+import com.grad.model.DAO.User;
 import com.grad.repository.TaskRepository;
 import com.grad.repository.UserRepository;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -26,8 +18,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
-import java.util.List;
 
 public class LoginController {
 
@@ -53,7 +43,7 @@ public class LoginController {
     private UserRepository userRepository;
     private User loggedInUser;
     private TaskRepository taskRepository;
-    private boolean isConnectionSuccessful;
+
 
     /**
      * CTRL + SHIFT + A and write down whatever u want and intellij is bringing that stuff to you
@@ -61,21 +51,10 @@ public class LoginController {
      */
 
     public void initialize() {
-        try {
-            persistenceConnection();
+        userRepository = new UserRepository(Singleton.getInstance());
 
-        } catch (Exception ex) {
-            System.out.println("Connection is not allowed");
-            isConnectionSuccessful = false;
-        }
     }
 
-    private void persistenceConnection() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("TODOFx");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        userRepository = new UserRepository(entityManager);
-        taskRepository = new TaskRepository(entityManager);
-    }
 
     public void GoToRegister(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -102,12 +81,12 @@ public class LoginController {
             lblLoginInfo.setTextFill( Color.RED );
         }
         FXMLLoader fxmlLoader = new FXMLLoader();
-        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream( "task.fxml" );
+        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream( "project.fxml" );
         Parent sceneLogin = fxmlLoader.load( resourceAsStream );
         Scene loginScene = new Scene( sceneLogin );
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle( "Task" );
+        window.setTitle( "Project");
         window.setScene( loginScene );
         window.show();
     }

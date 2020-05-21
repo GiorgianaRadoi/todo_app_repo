@@ -1,6 +1,6 @@
 package com.grad.controller;
 
-import com.grad.model.User;
+import com.grad.model.DAO.User;
 import com.grad.repository.ProjectRepository;
 import com.grad.repository.TaskRepository;
 import com.grad.repository.UserRepository;
@@ -44,30 +44,16 @@ public class RegisterController {
     @FXML
     private PasswordField pwdFieldConfirmRegister;
     private UserRepository userRepository;
-    public TaskRepository taskRepository;
-    public ProjectRepository projectRepository;
-    private boolean isConnectionSuccessful = false;
+
+
 
 
 
     public void initialize() {
-        try {
-            persistenceConnection();
-        } catch (Exception ex) {
-            System.out.println( "Connection is not allowed" );
-            isConnectionSuccessful = false;
-        }
+            userRepository = new UserRepository( Singleton.getInstance());
     }
 
-    private void persistenceConnection() {
-        EntityManagerFactory entityManagerFactory =
-                Persistence.createEntityManagerFactory( "TODOFx" );
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        userRepository = new UserRepository( entityManager );
-        taskRepository = new TaskRepository(entityManager);
-        projectRepository = new ProjectRepository(entityManager);
-    }
 
     @FXML
     public void registerUser(ActionEvent actionEvent) {

@@ -1,4 +1,4 @@
-package com.grad.model;
+package com.grad.model.DAO;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

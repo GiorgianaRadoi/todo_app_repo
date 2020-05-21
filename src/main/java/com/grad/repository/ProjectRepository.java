@@ -1,20 +1,20 @@
 package com.grad.repository;
 
-import com.grad.model.Project;
-import com.grad.model.Task;
-import org.hibernate.sql.Select;
+import com.grad.model.DAO.Project;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 public class ProjectRepository implements CrudRepository<Project, Integer> {
     private EntityManager entityManager;
+
     public ProjectRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
+    @Override
     public List<Project> findAll() {
-        return entityManager.createQuery( "SELECT p FROM Project p "  ).getResultList();
+        return entityManager.createQuery( "SELECT p FROM Project p " ).getResultList();
     }
 
     public void save(Project project) {
@@ -24,10 +24,10 @@ public class ProjectRepository implements CrudRepository<Project, Integer> {
     }
 
     public void deleteById(Integer id) {
-       Project project = findById(id);
+        Project project = findById( id );
         if (project != null) {
             entityManager.getTransaction().begin();
-            entityManager.remove(project);
+            entityManager.remove( project );
             entityManager.getTransaction().commit();
         }
 
@@ -35,10 +35,10 @@ public class ProjectRepository implements CrudRepository<Project, Integer> {
 
     public Project findById(Integer id) {
         try {
-            Project project = entityManager.find(Project.class, id);
+            Project project = entityManager.find( Project.class, id );
             return project;
         } catch (Exception e) {
-            System.out.println("Something went wrong...");
+            System.out.println( "Something went wrong..." );
         }
         return null;
     }

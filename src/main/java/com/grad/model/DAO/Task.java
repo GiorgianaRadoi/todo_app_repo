@@ -1,9 +1,8 @@
-package com.grad.model;
+package com.grad.model.DAO;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
 @Table(name = "task")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO , 1, 2, -> POSGRESQL
+    @GeneratedValue(strategy = GenerationType.AUTO) //AUTO , 1, 2, -> POSGRESQL
     @Column(name = "task_id")
     private int id;
 

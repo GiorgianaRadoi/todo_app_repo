@@ -1,6 +1,6 @@
 package com.grad.repository;
 
-import com.grad.model.User;
+import com.grad.model.DAO.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;

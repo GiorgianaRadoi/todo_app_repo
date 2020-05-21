@@ -1,12 +1,11 @@
 package com.grad.controller;
 
-import com.grad.model.Task;
-import com.grad.model.User;
+import com.grad.model.DAO.Task;
+import com.grad.model.DAO.User;
+import com.grad.model.DTO.TaskDTO;
 import com.grad.repository.ProjectRepository;
 import com.grad.repository.TaskRepository;
 import com.grad.repository.UserRepository;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,30 +41,19 @@ public class TaskController {
     public TaskRepository taskRepository;
     public ProjectRepository projectRepository;
     private User loggedInUser;
-    private boolean isConnectionSuccessful = false;
+
 
     public void initialize() {
-        try {
-            colTaskId.setCellValueFactory( new PropertyValueFactory<Task, Integer>( "id" ) );
-            colTaskDesc.setCellValueFactory( new PropertyValueFactory<Task, String>( "description" ) );
-            colUsername.setCellValueFactory( new PropertyValueFactory<Task, String>( "user" ) );
-            persistenceConnection();
 
-        } catch (Exception ex) {
-            System.out.println( "Connection is not allowed" );
-            isConnectionSuccessful = false;
-        }
+            colTaskId.setCellValueFactory( new PropertyValueFactory<TaskDTO, Integer>( "id" ) );
+            colTaskDesc.setCellValueFactory( new PropertyValueFactory<TaskDTO, String>( "description" ) );
+            colUsername.setCellValueFactory( new PropertyValueFactory<TaskDTO, String>( "user" ) );
+        userRepository = new UserRepository(Singleton.getInstance());
+        projectRepository = new ProjectRepository( Singleton.getInstance() );
+        taskRepository = new TaskRepository( Singleton.getInstance() );
     }
 
-    private void persistenceConnection() {
-        EntityManagerFactory entityManagerFactory =
-                Persistence.createEntityManagerFactory( "TODOFx" );
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        userRepository = new UserRepository( entityManager );
-        taskRepository = new TaskRepository( entityManager );
-
-    }
 
     public void insertTaskEnter(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals( KeyCode.ENTER )) {
@@ -93,8 +82,11 @@ public class TaskController {
     }
 
     public void loadTasks(Event event) {
-        List<Task> tasks = taskRepository.findAll();
-        final ObservableList<Task> dbTasks = FXCollections.observableList( tasks );
+        List<TaskDTO> tasks = new ArrayList<>(  );
+        for (Task task:taskRepository.findAll()) {
+            tasks.add( new TaskDTO( task ) );
+        }
+        final ObservableList<TaskDTO> dbTasks = FXCollections.observableList( tasks );
         tblView.setItems( dbTasks );
         System.out.println( "Loaded tasks" );
     }
